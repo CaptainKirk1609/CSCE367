@@ -94,20 +94,32 @@ public class AccessDB {
 	
 	static void callCreateSchedule() throws SQLException {
 		ResultSet rs;
+		
 		System.out.print("Please enter the schedule number:  ");
-		String input = keyboard.nextLine();
-		char sNum = input.charAt(0); 
+		String sNum = keyboard.nextLine();
+		
 		System.out.print("Please enter your desired year plan:  ");
-		input = keyboard.nextLine();
-		char yrPlan = input.charAt(0);
-		System.out.printf();
-		System.out.printf();
-		System.out.printf();
-		rs = testObj.createSchedule();
+		int yrPlan = Integer.parseInt(keyboard.nextLine());
+		
+		System.out.print("Please enter the degree type (BA or BS):  ");
+		String type = keyboard.nextLine().toUpperCase();
+		/**
+		while(!type.equalsIgnoreCase("BA") || !type.equalsIgnoreCase("BS")){
+			System.out.print("Invalid input, please enter either BA or BS: ");
+			type = keyboard.nextLine();
+		}
+		*/
+		
+		System.out.printf("\n%-12s\n", "Schedule");
+		System.out.println("------------------------");
+		System.out.printf("%s\t%s\t%s\t\n", "Schedule Number", "Year Plan", "Degree Type");
+		rs = testObj.createSchedule(sNum, yrPlan, type);
+		/**
 		while(rs.next()){ 
 			System.out.printf("    %-8s     %s\n", rs.getString(1), 
-					rs.getString(2) + ", " + rs.getString(3));
+					rs.getString(2) + rs.getString(3));
 		}
+		*/
 	}
 	
 	static void callNewAdviser() throws SQLException {
