@@ -100,8 +100,12 @@ public class AccessDB {
 		testObj.openDB(user,pass);
 	}
 	
+	/**
+	 * This medthod will allow student to create a new schedule
+	 * Student need to enter the schedule number, the year plan they want to graduate ( 2 or 4 year plans),
+	 * type of the degree they want (BA or BS)
+	 */
 	static void callCreateSchedule() throws SQLException {
-		//ResultSet rs;
 		
 		System.out.print("Please enter the schedule number:  ");
 		String sNum = keyboard.nextLine();
