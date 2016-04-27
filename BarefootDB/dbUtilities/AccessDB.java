@@ -123,6 +123,10 @@ public class AccessDB {
 		
 	}
 	
+	/**
+	 * This method will allow student to add their new addvisor for their academic
+	 * Student need to enter their sid and their faculty addvisor fid	 * 
+	 */
 	static void callNewAdviser() throws SQLException {
 		ResultSet rs;
 		System.out.print("Please enter the Advisers ID number (8 numbers): ");
