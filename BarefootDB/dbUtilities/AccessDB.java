@@ -133,6 +133,7 @@ public class AccessDB {
 		
 		while(rs.next()){
 			System.out.printf("%s\t%s \n", rs.getString(1), rs.getString(2));
+			
 		}
 	}
 	
@@ -169,12 +170,8 @@ public class AccessDB {
 		String cNum = keyboard.nextLine();
 		System.out.print("Enter the department of the course that the prerequisite is for: ");
 		String cDept = keyboard.nextLine();
-		
-		
-		
-		/**UPDATE Pre_req
-		SET course_num2 = ??? and dept2 = ????
-		WHERE course_num = ??? and dept = ???? and course_num2 = ??? and dept = ????*/
+				
+		testObj.updatePreReq(oldPRnum, oldPRdept, newPRnum, newPRdept, cNum, cDept);
 	}
 	
 }
