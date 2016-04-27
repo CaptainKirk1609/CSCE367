@@ -131,8 +131,82 @@ public class Utilities {
 		}
 	}
 	
-	public ResultSet scheduleEval(){
-		return null;
+	/**
+	 * First schedule evaluation condition
+	 * @param sch_num specific schedule number that student want to fulfill
+	 * @return returns the course on required CSCE courses (12 credits) that student need to take
+	 */
+	public ResultSet scheduleEval1(int sch_num){
+		ResultSet rset = null;
+		String sql = null;
+		try {
+			sql = "SELECT concat(c.dept,c.course_num) Course, semester_c , credit_hrs "+
+					"FROM semester s left outer join course c on concat(c.dept,c.course_num) = concat(s.dept,s.course_num) " +
+					"WHERE concat(c.dept,c.course_num) in " +
+					"(SELECT concat(f.dept,f.course_num) from fulfills f left outer join requirements r on f.req_num = r.req_num " +
+					"WHERE f.req_num = 2) and concat(c.dept,c.course_num) not in " +
+					"(SELECT concat(b.dept,b.course_num) from belongs_to b " + 
+					"WHERE sid = '04040404' and sch_num = ? ) ";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.clearParameters();
+			stmt.setInt(1,sch_num);
+			rset = stmt.executeQuery();
+		}catch (SQLException e){
+			System.out.println("createStatement " + e.getMessage() + sql);	
+		}
+		return rset;
+	}
+	
+	/**
+	 * Second schedule evaluation condition
+	 * @param sch_num specific schedule number that student want to fulfill
+	 * @return returns the course on required of CSCE 367 or CSCE 390 (4 credits) that student need to take
+	 */
+	public ResultSet scheduleEval2(int sch_num){
+		ResultSet rset = null;
+		String sql = null;
+		try {
+			sql = "SELECT concat(c.dept,c.course_num) Course, semester_c , credit_hrs "+
+					"FROM semester s left outer join course c on concat(c.dept,c.course_num) = concat(s.dept,s.course_num) " +
+					"WHERE concat(c.dept,c.course_num) in " +
+					"(SELECT concat(f.dept,f.course_num) from fulfills f left outer join requirements r on f.req_num = r.req_num " +
+					"WHERE f.req_num = 3) and concat(c.dept,c.course_num) not in " +
+					"(SELECT concat(b.dept,b.course_num) from belongs_to b " + 
+					"WHERE sid = '04040404' and sch_num = ? ) ";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.clearParameters();
+			stmt.setInt(1,sch_num);
+			rset = stmt.executeQuery();
+		}catch (SQLException e){
+			System.out.println("createStatement " + e.getMessage() + sql);	
+		}
+		return rset;
+	}
+	
+	/**
+	 * Third schedule evaluation condition
+	 * @param sch_num specific schedule number that student want to fulfill
+	 * @return returns the course on required of CSCE electives (12 credits)that student need to take
+	 */
+	public ResultSet scheduleEval3(int sch_num){
+		ResultSet rset = null;
+		String sql = null;
+		try {
+			sql = "SELECT concat(c.dept,c.course_num) Course, semester_c , credit_hrs "+
+					"FROM semester s left outer join course c on concat(c.dept,c.course_num) = concat(s.dept,s.course_num) " +
+					"WHERE concat(c.dept,c.course_num) in " +
+					"(SELECT concat(f.dept,f.course_num) from fulfills f left outer join requirements r on f.req_num = r.req_num " +
+					"WHERE f.req_num = 4) and concat(c.dept,c.course_num) not in " +
+					"(SELECT concat(b.dept,b.course_num) from belongs_to b " + 
+					"WHERE sid = '04040404' and sch_num = ? ) ";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.clearParameters();
+			stmt.setInt(1,sch_num);
+			rset = stmt.executeQuery();
+		}catch (SQLException e){
+			System.out.println("createStatement " + e.getMessage() + sql);	
+		}
+		return rset;
 	}
 	
 	public void updatePreReq(String oldPRNum,String oldPRDept,String newPRNum,String newPRDept,String cNum,String cDept){
