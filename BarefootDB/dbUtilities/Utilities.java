@@ -151,8 +151,8 @@ public class Utilities {
 			
 			stmt = conn.createStatement();
 			sql = "DELETE FROM belongs_to "+
-			"WHERE course_num = '"+cNum+" and sch_num = "+sNum+" and "+ 
-			"dept = '"+dept+"' and sid = 01010101";
+			"WHERE course_num = '"+cNum+"' and sch_num = "+sNum+" and "+ 
+			"dept = '"+dept+"' and sid = '01010101'";
 			stmt.executeUpdate(sql);
 			//EndDEBUG
 			System.out.print("Class "+dept+" "+cNum+" successfully deleted from schedule "+sNum);						
