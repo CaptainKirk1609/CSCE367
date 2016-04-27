@@ -151,9 +151,31 @@ public class AccessDB {
 	
 	static void callScheduleEval() throws SQLException {
 		ResultSet rs;
-		System.out.print("Please enter a department number: ");
-		String input = keyboard.nextLine();
-		int dno= Integer.parseInt(input); 
+		System.out.print("Please enter your schedule number: ");
+		int sch_num = Integer.parseInt(keyboard.nextLine());
+		System.out.println("\nThere is class you should take to fulfill the degree: ");
+		System.out.println("**********************************************************");
+		System.out.printf("%s\t\t%s\t%s\n", "Course","Semester","Credit hours");
+		rs = testObj.scheduleEval1(sch_num);
+		while (rs.next()) {
+			System.out.printf("%s\t%s\t\t%s\n", rs.getString(1),rs.getString(2),rs.getString(3));
+		}
+		
+		rs = testObj.scheduleEval2(sch_num);
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("Please choose 1 course in this list: ");
+		System.out.printf("%s\t\t%s\t%s\n", "Course","Semester","Credit hours");
+		while (rs.next()) {
+		System.out.printf("%s\t\t%s\t\t%s\n", rs.getString(1),rs.getString(2),rs.getString(3));
+		}
+		
+		rs = testObj.scheduleEval3(sch_num);
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println("Please choose 3 in this list: ");
+		System.out.printf("%s\t\t%s\t%s\n", "Course","Semester","Credit hours");
+		while (rs.next()) {
+			System.out.printf("%s\t\t%s\t\t%s\n", rs.getString(1),rs.getString(2),rs.getString(3));
+			}
 	}
 	
 	static void callUpdatePreReq() throws SQLException {
