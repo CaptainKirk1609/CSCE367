@@ -121,7 +121,7 @@ public class Utilities {
 			
 			stmt = conn.createStatement();
 			sql = "DELETE FROM belongs_to "+
-			"WHERE course_num = '"+cNum+"' and sch_num = "+sNum+" and "+ 
+			"WHERE course_num = '"+cNum+" and sch_num = "+sNum+" and "+ 
 			"dept = '"+dept+"' and sid = 01010101";
 			stmt.executeUpdate(sql);
 			//EndDEBUG
@@ -132,27 +132,28 @@ public class Utilities {
 	}
 	
 	public ResultSet scheduleEval(){
-		
+		return null;
 	}
 	
-	public ResultSet updatPreReq(String oldPRNum,String oldPRDept,String newPRNum,String newPRDept,String cNum,String cDept){
-		ResultSet rset = null;
+	public void updatePreReq(String oldPRNum,String oldPRDept,String newPRNum,String newPRDept,String cNum,String cDept){
 		String sql = null;
 		
 		try {
 			Statement stmt = conn.createStatement();
 			
 			stmt = conn.createStatement();
-			sql = /**"UPDATE pre_req
-		SET course_num2 = ??? and dept2 = ????
-		WHERE course_num = ??? and dept = ???? and course_num2 = ??? and dept = ????";*/
+			sql = "delete from pre_req "+
+				  "where dept='"+cDept+"' and course_num='"+cNum+"' and dept2='"+oldPRDept+"' and course_num2='"+oldPRNum+"'";
+			stmt.executeUpdate(sql);
+			sql = "insert into pre_req "+
+				  "values ('"+cDept+"','"+cNum+"','"+newPRDept+"','"+newPRNum+"')";
 			stmt.executeUpdate(sql);
 			//EndDEBUG
-			System.out.print("Class "+dept+" "+cNum+" successfully deleted from schedule "+sNum);						
+			System.out.print(oldPRDept+" "+oldPRNum+" replaced with "+newPRDept+" "+newPRNum+"\n");						
 		} catch (SQLException e) {
 			System.out.println("createStatement " + e.getMessage() + sql);
 		}
 		
-		return rset;
 	}
+	
 }
