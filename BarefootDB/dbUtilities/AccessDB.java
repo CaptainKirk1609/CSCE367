@@ -1,4 +1,4 @@
-package test;
+package dbUtilities;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ public class AccessDB {
 
 	static Utilities testObj = new Utilities(); // Utilities object for testing
 	static Scanner keyboard = new Scanner(System.in); // standard input
-
+	
 	public static void main(String[] args) throws SQLException{
 		int choice;
 		boolean done = false;
@@ -42,22 +42,22 @@ public class AccessDB {
 				break;
 			}
 			case 7: {
-				callDisplayAllSchedule();
-				break;
-			}
-			case 9: {
 				testObj.closeDB(); //close the DB connection 
 				break;
 			}
-			case 10: {
+			case 8: {
 				done = true;
 				System.out.println("Good bye");
+				break;
+			}
+			case 9:{
+				openDefault();
 				break;
 			}
 			}
 		}
 	}
-
+			
 	static void displaymenu() {
 		System.out.println("1)  Open the DB");
 		System.out.println("2)  Create a new schedule");
@@ -65,11 +65,10 @@ public class AccessDB {
 		System.out.println("4)  Delete a course from a schedule");
 		System.out.println("5)  Evaluate a schedule");
 		System.out.println("6)  Update a prerequisite for a class");
-		System.out.println("7)  Display all schedule");
-		System.out.println("9)  Close the DB");
-		System.out.println("10)  Quit");
+		System.out.println("7)  Close the DB");
+		System.out.println("8)  Quit");
 	}
-
+	
 	static int getChoice() {
 		String input;
 		int i = 0;
@@ -85,88 +84,98 @@ public class AccessDB {
 		}
 		return i;
 	}
-
+	
+	static void openDefault(){
+		testObj.openDef();
+	}
+	
 	static void openDB() {
 		String user;
 		String pass;
-
+		
 		System.out.print("Please enter the username: ");
 		user = keyboard.nextLine();
 		System.out.print("Please enter the password: ");
 		pass = keyboard.nextLine();
 		testObj.openDB(user,pass);
 	}
-
+	
 	static void callCreateSchedule() throws SQLException {
-		ResultSet rs;
-
+		//ResultSet rs;
+		
 		System.out.print("Please enter the schedule number:  ");
 		String sNum = keyboard.nextLine();
-
+		
 		System.out.print("Please enter your desired year plan:  ");
 		int yrPlan = Integer.parseInt(keyboard.nextLine());
-
+		
 		System.out.print("Please enter the degree type (BA or BS):  ");
 		String type = keyboard.nextLine().toUpperCase();
-		/**
-		while(!type.equalsIgnoreCase("BA") || !type.equalsIgnoreCase("BS")){
-			System.out.print("Invalid input, please enter either BA or BS: ");
-			type = keyboard.nextLine();
-		}
-		 */
-
+				
 		System.out.printf("\n%-12s\n", "Schedule");
 		System.out.println("------------------------");
 		System.out.printf("%s\t%s\t%s\t\n", "Schedule Number", "Year Plan", "Degree Type");
-		rs = testObj.createSchedule(sNum, yrPlan, type);
-		/**
-		while(rs.next()){ 
-			System.out.printf("    %-8s     %s\n", rs.getString(1), 
-					rs.getString(2) + rs.getString(3));
-		}
-		 */
+		testObj.createSchedule(sNum, yrPlan, type);
+		
 	}
-
+	
 	static void callNewAdviser() throws SQLException {
 		ResultSet rs;
-		System.out.print("Please enter a department number: ");
-		String input = keyboard.nextLine();
-		int dno= Integer.parseInt(input); 
+		System.out.print("Please enter the Advisers ID number (8 numbers): ");
+		String fid = keyboard.nextLine();
+		System.out.print("Please enter the Students ID number (8 numbers): ");
+		String sid = keyboard.nextLine();
+		
+		System.out.printf("\n%-12s\n", "Student and Adviser");
+		System.out.println("------------------------");
+		System.out.printf("%s\t\t%s\n", "SID", "FID");
+		rs = testObj.newAdviser(fid, sid);
+		
+		while(rs.next()){
+			System.out.printf("%s\t%s \n", rs.getString(1), rs.getString(2));
+		}
 	}
-
+	
 	static void callDeleteCourse() throws SQLException {
-		ResultSet rs;
-		System.out.print("Please enter a department number: ");
+		System.out.print("Please enter the schedule number: ");
 		String input = keyboard.nextLine();
-		int dno= Integer.parseInt(input); 
+		int sNum= Integer.parseInt(input);
+		System.out.print("Please enter the course number: ");
+		String cNum = keyboard.nextLine();
+		System.out.print("Please enter the course department(CSCE): ");
+		String dept = keyboard.nextLine();
+		
+		testObj.deleteCourse(sNum, cNum, dept);
 	}
-
+	
 	static void callScheduleEval() throws SQLException {
 		ResultSet rs;
 		System.out.print("Please enter a department number: ");
 		String input = keyboard.nextLine();
 		int dno= Integer.parseInt(input); 
 	}
-
+	
 	static void callUpdatePreReq() throws SQLException {
 		ResultSet rs;
-		System.out.print("Please enter a department number: ");
-		String input = keyboard.nextLine();
-		int dno= Integer.parseInt(input); 
+		System.out.print("Enter the course number of the prerequisite to be changed: ");
+		String oldPRnum = keyboard.nextLine();
+		System.out.print("Enter the department of the prerequisite to be changed: ");
+		String oldPRdept= keyboard.nextLine();
+		System.out.print("Enter the course number of the new prerequisite: ");
+		String newPRnum = keyboard.nextLine();
+		System.out.print("Enter the department of the new prerequisite: ");
+		String newPRdept = keyboard.nextLine();
+		System.out.print("Enter the number of the course that the prerequisite is for: ");
+		String cNum = keyboard.nextLine();
+		System.out.print("Enter the department of the course that the prerequisite is for: ");
+		String cDept = keyboard.nextLine();
+		
+		
+		
+		/**UPDATE Pre_req
+		SET course_num2 = ??? and dept2 = ????
+		WHERE course_num = ??? and dept = ???? and course_num2 = ??? and dept = ????*/
 	}
-
-	//test displayAllSchedule
-	public static void callDisplayAllSchedule() throws SQLException{
-		System.out.print("Please enter your student sid: ");
-		String sid = keyboard.nextLine();
-		System.out.println("\nSchedule that you have"); 
-		System.out.println("*****************************			");
-		System.out.printf("%s\t%s\t%s\n", "Schedule_number","Year plan","Type");
-		ResultSet rs = testObj.displayAllSchedule(sid); 
-		while(rs.next()){ 
-			System.out.printf("       %s\t%s\t\t%s\n", rs.getString(1),rs.getString(2),rs.getString(3));
-		}
-	}
-
+	
 }
-
+	
