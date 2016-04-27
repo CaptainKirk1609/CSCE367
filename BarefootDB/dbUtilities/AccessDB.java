@@ -11,7 +11,7 @@ public class AccessDB {
 	/**  
 	  * Main method that will loop until the exit command (submitting the number 8) is
 	  * specified. It will also call the display menu method, which displays the numbered options
-	  * for actions the user can cary out.
+	  * for actions the user can carry out.
 	  */
 	public static void main(String[] args) throws SQLException{
 		int choice;
@@ -135,9 +135,9 @@ public class AccessDB {
 		System.out.print("Please enter the degree type (BA or BS):  ");
 		String type = keyboard.nextLine().toUpperCase();
 				
-		System.out.printf("\n%-12s\n", "Schedule");
+		/**System.out.printf("\n%-12s\n", "Schedule");
 		System.out.println("------------------------");
-		System.out.printf("%s\t%s\t%s\t\n", "Schedule Number", "Year Plan", "Degree Type");
+		System.out.printf("%s\t%s\t%s\t\n", "Schedule Number", "Year Plan", "Degree Type");*/
 		testObj.createSchedule(sNum, yrPlan, type);
 		
 	}
