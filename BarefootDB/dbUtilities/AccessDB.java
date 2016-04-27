@@ -1,4 +1,4 @@
-package dbUtilities;
+package test;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ public class AccessDB {
 
 	static Utilities testObj = new Utilities(); // Utilities object for testing
 	static Scanner keyboard = new Scanner(System.in); // standard input
-	
+
 	public static void main(String[] args) throws SQLException{
 		int choice;
 		boolean done = false;
@@ -42,10 +42,14 @@ public class AccessDB {
 				break;
 			}
 			case 7: {
+				callDisplayAllSchedule();
+				break;
+			}
+			case 9: {
 				testObj.closeDB(); //close the DB connection 
 				break;
 			}
-			case 8: {
+			case 10: {
 				done = true;
 				System.out.println("Good bye");
 				break;
@@ -53,7 +57,7 @@ public class AccessDB {
 			}
 		}
 	}
-			
+
 	static void displaymenu() {
 		System.out.println("1)  Open the DB");
 		System.out.println("2)  Create a new schedule");
@@ -61,10 +65,11 @@ public class AccessDB {
 		System.out.println("4)  Delete a course from a schedule");
 		System.out.println("5)  Evaluate a schedule");
 		System.out.println("6)  Update a prerequisite for a class");
-		System.out.println("7)  Close the DB");
-		System.out.println("8)  Quit");
+		System.out.println("7)  Display all schedule");
+		System.out.println("9)  Close the DB");
+		System.out.println("10)  Quit");
 	}
-	
+
 	static int getChoice() {
 		String input;
 		int i = 0;
@@ -80,27 +85,27 @@ public class AccessDB {
 		}
 		return i;
 	}
-	
+
 	static void openDB() {
 		String user;
 		String pass;
-		
+
 		System.out.print("Please enter the username: ");
 		user = keyboard.nextLine();
 		System.out.print("Please enter the password: ");
 		pass = keyboard.nextLine();
 		testObj.openDB(user,pass);
 	}
-	
+
 	static void callCreateSchedule() throws SQLException {
 		ResultSet rs;
-		
+
 		System.out.print("Please enter the schedule number:  ");
 		String sNum = keyboard.nextLine();
-		
+
 		System.out.print("Please enter your desired year plan:  ");
 		int yrPlan = Integer.parseInt(keyboard.nextLine());
-		
+
 		System.out.print("Please enter the degree type (BA or BS):  ");
 		String type = keyboard.nextLine().toUpperCase();
 		/**
@@ -108,8 +113,8 @@ public class AccessDB {
 			System.out.print("Invalid input, please enter either BA or BS: ");
 			type = keyboard.nextLine();
 		}
-		*/
-		
+		 */
+
 		System.out.printf("\n%-12s\n", "Schedule");
 		System.out.println("------------------------");
 		System.out.printf("%s\t%s\t%s\t\n", "Schedule Number", "Year Plan", "Degree Type");
@@ -119,36 +124,49 @@ public class AccessDB {
 			System.out.printf("    %-8s     %s\n", rs.getString(1), 
 					rs.getString(2) + rs.getString(3));
 		}
-		*/
+		 */
 	}
-	
+
 	static void callNewAdviser() throws SQLException {
 		ResultSet rs;
 		System.out.print("Please enter a department number: ");
 		String input = keyboard.nextLine();
 		int dno= Integer.parseInt(input); 
 	}
-	
+
 	static void callDeleteCourse() throws SQLException {
 		ResultSet rs;
 		System.out.print("Please enter a department number: ");
 		String input = keyboard.nextLine();
 		int dno= Integer.parseInt(input); 
 	}
-	
+
 	static void callScheduleEval() throws SQLException {
 		ResultSet rs;
 		System.out.print("Please enter a department number: ");
 		String input = keyboard.nextLine();
 		int dno= Integer.parseInt(input); 
 	}
-	
+
 	static void callUpdatePreReq() throws SQLException {
 		ResultSet rs;
 		System.out.print("Please enter a department number: ");
 		String input = keyboard.nextLine();
 		int dno= Integer.parseInt(input); 
 	}
-	
+
+	//test displayAllSchedule
+	public static void callDisplayAllSchedule() throws SQLException{
+		System.out.print("Please enter your student sid: ");
+		String sid = keyboard.nextLine();
+		System.out.println("\nSchedule that you have"); 
+		System.out.println("*****************************			");
+		System.out.printf("%s\t%s\t%s\n", "Schedule_number","Year plan","Type");
+		ResultSet rs = testObj.displayAllSchedule(sid); 
+		while(rs.next()){ 
+			System.out.printf("       %s\t%s\t\t%s\n", rs.getString(1),rs.getString(2),rs.getString(3));
+		}
+	}
+
 }
-	
+

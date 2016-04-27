@@ -1,4 +1,4 @@
-package dbUtilities;
+package test;
 
 import java.sql.*;
 
@@ -80,4 +80,28 @@ public class Utilities {
 		return rset;
 		
 	}
+	
+	/**
+	 * Display all the schedule of specific student
+	 * @param sid Student sid number
+	 * @return Return the student's all schedules
+	 */
+	public ResultSet displayAllSchedule(String sid){
+		ResultSet rset = null;
+		String sql = null;
+		
+		try {
+			// create a Statement and an SQL string for the statement
+			sql = "SELECT sch_num, year_plan, type FROM schedule " +
+					"WHERE sid = ? " + 
+					"ORDER BY sch_num";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.clearParameters();
+			stmt.setString(1,sid); //set the 1 parameter
+			rset = stmt.executeQuery();
+		} catch (SQLException e) {
+			System.out.println("createStatement " + e.getMessage() + sql);
+		}		
+		return rset;
+	}// end displayAllSchedule
 }
