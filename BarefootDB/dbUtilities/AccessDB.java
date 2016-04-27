@@ -1,5 +1,5 @@
 package dbUtilities;
-
+//contains methods for accessing MySQL DB
 import java.sql.*;
 import java.util.Scanner;
 
@@ -8,6 +8,11 @@ public class AccessDB {
 	static Utilities testObj = new Utilities(); // Utilities object for testing
 	static Scanner keyboard = new Scanner(System.in); // standard input
 	
+	/**  
+	  * Main method that will loop until the exit command (submitting the number 8) is
+	  * specified. It will also call the display menu method, which displays the numbered options
+	  * for actions the user can cary out.
+	  */
 	public static void main(String[] args) throws SQLException{
 		int choice;
 		boolean done = false;
@@ -57,7 +62,9 @@ public class AccessDB {
 			}
 		}
 	}
-			
+	/** 
+	 * This method will print a menu of the options available to the user
+	  */
 	static void displaymenu() {
 		System.out.println("1)  Open the DB");
 		System.out.println("2)  Create a new schedule");
@@ -67,8 +74,14 @@ public class AccessDB {
 		System.out.println("6)  Update a prerequisite for a class");
 		System.out.println("7)  Close the DB");
 		System.out.println("8)  Quit");
+		System.out.println("9)  Open Default Database");
 	}
 	
+	/** 
+	  * Get choice will take the users specified command (in the form of an integer)
+	  * and return it to the main method where it will specify which operation the user
+	  * wants to perform. 
+	  */
 	static int getChoice() {
 		String input;
 		int i = 0;
@@ -85,10 +98,16 @@ public class AccessDB {
 		return i;
 	}
 	
+	/** 
+	 * Opens the default database (ba367_2016)
+	 */
 	static void openDefault(){
 		testObj.openDef();
 	}
-	
+	/**  
+	 * Opens the database and requires the user enter the username and 
+	 * password for the databse ba367_2016
+	 */
 	static void openDB() {
 		String user;
 		String pass;
@@ -101,8 +120,8 @@ public class AccessDB {
 	}
 	
 	/**
-	 * This medthod will allow student to create a new schedule
-	 * Student need to enter the schedule number, the year plan they want to graduate ( 2 or 4 year plans),
+	 * This method will allow student to create a new schedule
+	 * Student needs to enter the schedule number, their year plan (2 or 4 year plan),
 	 * type of the degree they want (BA or BS)
 	 */
 	static void callCreateSchedule() throws SQLException {
@@ -124,8 +143,8 @@ public class AccessDB {
 	}
 	
 	/**
-	 * This method will allow student to add their new addvisor for their academic
-	 * Student need to enter their sid and their faculty addvisor fid	 * 
+	 * This method will allow adviser to add themselves as the adviser for a student
+	 * Adviser need to enter their fid and the sid of the student they will be advising 
 	 */
 	static void callNewAdviser() throws SQLException {
 		ResultSet rs;
@@ -145,6 +164,11 @@ public class AccessDB {
 		}
 	}
 	
+	/**
+	 * This method allows the user to delete a course from a specified schedule that belongs to them.
+	 * They will be prompted to enter the schedule number and the course number and department, which
+	 * will then be deleted from the specified schedule. 
+	 */
 	static void callDeleteCourse() throws SQLException {
 		System.out.print("Please enter the schedule number: ");
 		String input = keyboard.nextLine();
@@ -157,6 +181,11 @@ public class AccessDB {
 		testObj.deleteCourse(sNum, cNum, dept);
 	}
 	
+	/**
+	 * This method will evaluate a students schedule and display information about what 
+	 * required classes are missing from the schedule. The user must specify the schedule number
+	 * of the schedule to be evaluated.
+	 */
 	static void callScheduleEval() throws SQLException {
 		ResultSet rs;
 		System.out.print("Please enter your schedule number: ");
@@ -186,6 +215,13 @@ public class AccessDB {
 			}
 	}
 	
+	/**
+	 * This method allows the user to update the current prerequisite for a specified class 
+	 * to a new prerequisite. The user must specify the course number and department for the 
+	 * new prerequisite course, course number and department for the old prerequisite course,
+	 * and the course number and department for the course that the prerequisite will be 
+	 * required for. 
+	 */
 	static void callUpdatePreReq() throws SQLException {
 		ResultSet rs;
 		System.out.print("Enter the course number of the prerequisite to be changed: ");
