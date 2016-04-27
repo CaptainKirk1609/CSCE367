@@ -6,7 +6,10 @@ public class Utilities {
 	
 	private Connection conn = null; // Connection object
 	
-	
+	/**
+	 * This method opens the default browser which connects the students to the database 
+	 * 
+	 */
 	public void openDef() {
 		try {
 		Class.forName("com.mysql.jdbc.Driver");
@@ -29,7 +32,12 @@ public class Utilities {
 		System.out.println("Accessing: ba367_2016");
 	}// openDB
 
-	
+	/**
+	 * This method opens the database for the user 
+	 * 
+	 * @param uname username of the group 
+	 * @param pass password of the group's database 
+	 */
 	public void openDB(String uname, String pass){
 		// Load the MySQL JDBC driver
 		try {
@@ -48,7 +56,9 @@ public class Utilities {
 		System.out.println("Error connecting to database: " + e.toString());
 		}
 	}
-	
+	/**
+	 * This method closes the database and will send a fail message if the connection was not closed 
+	 */
 	public void closeDB() {
 		try {
 			conn.close();
@@ -59,6 +69,13 @@ public class Utilities {
 		}
 	}// closeDB
 	
+	/**
+	 * This method creates a new schedule for a student
+	 * @param sNum Student's unique schedule number 
+	 * @param yrPlan Number of years the student plans on taking to get their degree 
+	 * @param type Type of degree the student plans on getting 
+	 * 
+	 */
 	public ResultSet createSchedule(String sNum, int yrPlan, String type){
 		ResultSet rset = null;
 		String sql = null;
@@ -85,7 +102,12 @@ public class Utilities {
 		
 		return rset;
 	}
-	
+	/**
+	 * This method assigns a student a new advisor 
+	 * @param fid Faculty's unique ID number 
+	 * @param sid Student's unique ID number 
+	 */
+	 
 	public ResultSet newAdviser(String fid, String sid){
 		ResultSet rset = null;
 		String sql = null;
@@ -113,6 +135,14 @@ public class Utilities {
 		return rset;
 	}
 	
+	/**
+	 * This method deletes a course from a schedule
+	 * @param sNum Student's unique schedule number 
+	 * @param cNum Each course has a unique number to identify by
+	 * @param dept Department where each course belongs to 
+	 * 
+	 */
+	 
 	public void deleteCourse(int sNum, String cNum, String dept){
 		String sql = null;
 				
@@ -209,6 +239,16 @@ public class Utilities {
 		return rset;
 	}
 	
+	/**
+	 * This method updates a PreReq for a certain course done by the advisor
+	 * @param oldPRNum PreReq number of the courses being updated 
+	 * @param oldPRDept Department name of the coursee being updated 
+	 * @param newPRNum PreReq number of the course replacing the old PreReq
+	 * @param newPRDept Department name of the course replacing the old PreReq
+	 * @param cNum Course number that the updated PreReq is for
+	 * @cDept cDept Department name that the updated PreReq is for 
+	 */
+	 
 	public void updatePreReq(String oldPRNum,String oldPRDept,String newPRNum,String newPRDept,String cNum,String cDept){
 		String sql = null;
 		
